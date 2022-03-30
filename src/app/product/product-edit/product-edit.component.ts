@@ -11,7 +11,12 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
   styleUrls: ['./product-edit.component.css']
 })
 export class ProductEditComponent implements OnInit {
-  productForm!: FormGroup;
+  productForm: FormGroup = new FormGroup({
+    name: new FormControl(),
+    price: new FormControl(),
+    description: new FormControl(),
+    category: new FormControl()
+  });
   categories: Category[] = [];
   id!: number;
 
@@ -19,8 +24,7 @@ export class ProductEditComponent implements OnInit {
               private categoryService: CategoryService,
               private activatedRoute: ActivatedRoute) {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      // @ts-ignore
-      this.id = paramMap.get('id');
+      this.id = parseInt(<string>paramMap.get('id'));
       this.getProduct(this.id);
     });
   }
